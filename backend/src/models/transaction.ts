@@ -1,14 +1,15 @@
 import crypto from "crypto";
 import { ec } from "elliptic";
+import ITransaction from "../types/transaction";
 
 const EC = new ec("secp256k1");
 
-export default class Transaction {
+export default class Transaction implements ITransaction {
   public from: string;
   public to: string;
   public amount: number;
-  private timestamp: number;
-  private signature?: string;
+  public timestamp: number;
+  public signature?: string;
 
   constructor(from: string, to: string, amount: number) {
     this.from = from;

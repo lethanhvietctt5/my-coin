@@ -2,22 +2,30 @@ import Block from "./block";
 import Transaction from "./transaction";
 import { genesisPublicKey } from "../initKeys";
 
-class BlockChain {
+export default class BlockChain {
   public chain: Block[];
   public pendingTransactions: Transaction[];
   private difficulty: number;
   private reward: number;
 
   constructor() {
-    this.chain = [this.createGenesisBlock()];
-    this.pendingTransactions = [];
     this.difficulty = 2;
-    this.reward = 100;
+    this.pendingTransactions = [];
+    this.reward = 10;
+    this.chain = [this.createGenesisBlock()];
   }
 
   createGenesisBlock() {
     const initTransaction = new Transaction("", genesisPublicKey, 1_000_000);
-    return new Block("0", [initTransaction], new Date().getTime());
+    const genesisBlock = new Block(
+      "0",
+      [initTransaction],
+      new Date().getTime()
+    );
+
+    genesisBlock.mine(this.difficulty);
+
+    return genesisBlock;
   }
 
   getBalance(address: string) {
@@ -59,7 +67,7 @@ class BlockChain {
     const pendingAmount = this.pendingTransactions
       .filter((trans) => trans.from === tx.from)
       .map((trans) => trans.amount)
-      .reduce((prev: number, current: number) => prev + current);
+      .reduce((prev: number, current: number) => prev + current, 0);
 
     if (balance < tx.amount + pendingAmount) {
       throw new Error("Not enough coins");

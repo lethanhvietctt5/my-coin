@@ -1,12 +1,13 @@
 import crypto from "crypto";
+import IBlock from "../types/block";
 import Transaction from "./transaction";
 
-export default class Block {
+export default class Block implements IBlock {
   public hash: string;
   public prevHash: string;
   public transactions: Transaction[];
-  private nonce: number;
-  private timestamp: number;
+  public nonce: number;
+  public timestamp: number;
 
   constructor(
     prevHash: string,
