@@ -1,5 +1,5 @@
-import footer from "../assets/images/footer.png";
-import blockchain from "../assets/gifs/blockchain.gif";
+import footer from "assets/images/footer.png";
+import blockchain from "assets/gifs/blockchain.gif";
 
 function Footer() {
   return (

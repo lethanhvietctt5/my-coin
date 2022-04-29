@@ -1,4 +1,38 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import api from "api";
+import { useRef, useState } from "react";
+import icCopy from "assets/svgs/ic_copy.svg";
+
 function CreateWallet() {
+  const privateKeyRef = useRef<HTMLDivElement>(null);
+  const publicKeyRef = useRef<HTMLDivElement>(null);
+  const downloadRef = useRef<HTMLAnchorElement>(null);
+
+  const [downloadable, setDownloadable] = useState(false);
+
+  async function generateWallet() {
+    const response = await api.post("/generate");
+    const str = JSON.stringify(response.data);
+    const bytes = new TextEncoder().encode(str);
+    const blob = new Blob([bytes], { type: "" });
+
+    const href = window.URL.createObjectURL(blob);
+    const a = downloadRef.current;
+    if (a !== null) {
+      a.download = "Keys";
+      a.href = href;
+      setDownloadable(true);
+    }
+    if (privateKeyRef.current && publicKeyRef.current) {
+      privateKeyRef.current.innerText = response.data.privateKey;
+      publicKeyRef.current.innerText = response.data.publicKey;
+    }
+  }
+
+  function coypyKey(key: string) {
+    navigator.clipboard.writeText(key);
+  }
+
   return (
     <div className="flex justify-center items-center py-10">
       <div className="w-1/2">
@@ -12,34 +46,106 @@ function CreateWallet() {
 
         {/* Public Key */}
         <div className="w-full flex justify-between items-center border border-gray-400 hover:border-emerald-400 rounded-md px-4 py-4 mt-10">
-          <div className="text-gray-400 italic">Your Public Key</div>
-          <div className="text-gray-400 hover:text-emerald-400 cursor-pointer">
-            <svg width="1em" height="1em" viewBox="0 0 20 20">
-              <path
-                fill="currentColor"
-                d="M6.644 2.983a.252.252 0 0 0-.253.252c0 .139.113.251.253.251h3.713c.14 0 .253-.112.253-.251a.252.252 0 0 0-.253-.252H6.644Zm3.713-1.342c.734 0 1.353.49 1.544 1.16l2.175.001c.621.004 1.122.205 1.432.638c.266.372.372.85.345 1.387L15.85 17.84c.042.552-.062 1.04-.328 1.445c-.312.473-.821.71-1.452.716H3.14c-.76-.03-1.323-.209-1.675-.609c-.327-.371-.47-.88-.464-1.5V4.84c-.013-.6.154-1.106.518-1.48c.376-.384.932-.554 1.647-.559h1.935c.19-.67.809-1.16 1.543-1.16h3.713Zm0 3.187H6.644c-.546 0-1.027-.27-1.317-.684H3.17c-.383.002-.602.07-.682.152c-.091.093-.144.252-.138.531v13.07c-.003.325.052.522.13.61c.054.061.286.135.685.151h10.9c.2-.002.28-.04.326-.109c.091-.138.133-.334.11-.658l.001-13.096c.014-.293-.027-.482-.096-.578c-.026-.035-.116-.072-.336-.073h-2.397c-.29.414-.771.684-1.317.684ZM17.2 0c.994 0 1.8.801 1.8 1.79v14.082c0 .988-.806 1.79-1.8 1.79h-1.958v-1.343h1.957c.249 0 .45-.2.45-.447V1.789a.449.449 0 0 0-.45-.447H9.643c-.248 0-.45.2-.45.447v.157h-1.35v-.157C7.843.801 8.649 0 9.643 0H17.2ZM8.196 11.751c.373 0 .675.3.675.671c0 .37-.302.671-.675.671H4.145a.673.673 0 0 1-.676-.67c0-.371.303-.672.676-.672h4.051Zm4.052-2.684c.372 0 .675.3.675.671c0 .37-.303.671-.675.671H4.145a.673.673 0 0 1-.676-.67c0-.371.303-.672.676-.672h8.103Zm0-2.684c.372 0 .675.3.675.671a.673.673 0 0 1-.675.671H4.145a.673.673 0 0 1-.676-.67c0-.371.303-.672.676-.672h8.103Z"
-              ></path>
-            </svg>
+          <div
+            className="text-gray-400 italic whitespace-nowrap overflow-hidden overflow-ellipsis"
+            ref={publicKeyRef}
+          >
+            <span>Your Public Key</span>
+          </div>
+          <div
+            className="w-[24px] min-w-[24px] text-gray-400 hover:text-emerald-400 cursor-pointer ml-2"
+            onClick={() => coypyKey(publicKeyRef.current!.innerText)}
+            title="Copy"
+          >
+            <img src={icCopy} alt="Copy" />
           </div>
         </div>
 
         {/* Private Key */}
         <div className="w-full flex justify-between items-center border border-gray-400 hover:border-emerald-400 rounded-md px-4 py-4 mt-10">
-          <div className="text-gray-400 italic">Your Private Key</div>
-          <div className="text-gray-400 hover:text-emerald-400 cursor-pointer">
-            <svg width="1em" height="1em" viewBox="0 0 20 20">
-              <path
-                fill="currentColor"
-                d="M6.644 2.983a.252.252 0 0 0-.253.252c0 .139.113.251.253.251h3.713c.14 0 .253-.112.253-.251a.252.252 0 0 0-.253-.252H6.644Zm3.713-1.342c.734 0 1.353.49 1.544 1.16l2.175.001c.621.004 1.122.205 1.432.638c.266.372.372.85.345 1.387L15.85 17.84c.042.552-.062 1.04-.328 1.445c-.312.473-.821.71-1.452.716H3.14c-.76-.03-1.323-.209-1.675-.609c-.327-.371-.47-.88-.464-1.5V4.84c-.013-.6.154-1.106.518-1.48c.376-.384.932-.554 1.647-.559h1.935c.19-.67.809-1.16 1.543-1.16h3.713Zm0 3.187H6.644c-.546 0-1.027-.27-1.317-.684H3.17c-.383.002-.602.07-.682.152c-.091.093-.144.252-.138.531v13.07c-.003.325.052.522.13.61c.054.061.286.135.685.151h10.9c.2-.002.28-.04.326-.109c.091-.138.133-.334.11-.658l.001-13.096c.014-.293-.027-.482-.096-.578c-.026-.035-.116-.072-.336-.073h-2.397c-.29.414-.771.684-1.317.684ZM17.2 0c.994 0 1.8.801 1.8 1.79v14.082c0 .988-.806 1.79-1.8 1.79h-1.958v-1.343h1.957c.249 0 .45-.2.45-.447V1.789a.449.449 0 0 0-.45-.447H9.643c-.248 0-.45.2-.45.447v.157h-1.35v-.157C7.843.801 8.649 0 9.643 0H17.2ZM8.196 11.751c.373 0 .675.3.675.671c0 .37-.302.671-.675.671H4.145a.673.673 0 0 1-.676-.67c0-.371.303-.672.676-.672h4.051Zm4.052-2.684c.372 0 .675.3.675.671c0 .37-.303.671-.675.671H4.145a.673.673 0 0 1-.676-.67c0-.371.303-.672.676-.672h8.103Zm0-2.684c.372 0 .675.3.675.671a.673.673 0 0 1-.675.671H4.145a.673.673 0 0 1-.676-.67c0-.371.303-.672.676-.672h8.103Z"
-              ></path>
-            </svg>
+          <div
+            className="text-gray-400 italic whitespace-nowrap overflow-hidden overflow-ellipsis"
+            ref={privateKeyRef}
+          >
+            Your Private Key
+          </div>
+          <div
+            className="w-[24px] min-w-[24px] text-gray-400 hover:text-emerald-400 cursor-pointer ml-2"
+            title="Copy"
+            onClick={() => coypyKey(privateKeyRef.current!.innerText)}
+          >
+            <img src={icCopy} alt="Copy" />
           </div>
         </div>
 
-        <div className="flex justify-center items-center px-4 py-4 rounded-md text-white bg-emerald-600 mt-10">
-          <div className="text-lg">Generate Wallet</div>
-          <div className="ml-3 text-3xl"></div>
+        <div className="w-full flex space-x-3 justify-between">
+          {/* Button Generate Wallet */}
+          <div
+            className="flex w-1/2 justify-center items-center px-4 py-4 rounded-md border-2 border-emerald-600 text-white hover:text-emerald-600 bg-emerald-600 hover:bg-white mt-10 cursor-pointer transition-colors ease-in-out delay-150"
+            onClick={generateWallet}
+          >
+            <div className="text-xl mr-2">
+              <svg width="1em" height="1em" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M3 0v3H0v2h3v3h2V5h3V3H5V0H3m7 3v2h9v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5v-9H3v9a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-2.28A2 2 0 0 0 22 15V9a2 2 0 0 0-1-1.72V5c0-1.1-.9-2-2-2h-9m3 6h7v6h-7V9m3 1.5a1.5 1.5 0 0 0-1.5 1.5a1.5 1.5 0 0 0 1.5 1.5a1.5 1.5 0 0 0 1.5-1.5a1.5 1.5 0 0 0-1.5-1.5Z"
+                ></path>
+              </svg>
+            </div>
+            <div className="text-lg">Generate Wallet</div>
+            <div className="ml-3 text-3xl"></div>
+          </div>
+
+          {/* Button Download Keys */}
+          <div className="w-1/2">
+            <a
+              href="#"
+              ref={downloadRef}
+              className={`${!downloadable ? `hidden` : `visible`}`}
+            >
+              <button className="w-full flex justify-center items-center px-4 py-4 rounded-md border-2 border-emerald-600 text-white hover:text-emerald-600 bg-emerald-600 hover:bg-white mt-10 cursor-pointer transition-colors ease-in-out delay-150">
+                <div className="text-xl mr-2">
+                  <svg width="1em" height="1em" viewBox="0 0 32 32">
+                    <path
+                      fill="currentColor"
+                      d="M23.5 22H23v-2h.5a4.5 4.5 0 0 0 .36-9H23l-.1-.82a7 7 0 0 0-13.88 0L9 11h-.86a4.5 4.5 0 0 0 .36 9H9v2h-.5A6.5 6.5 0 0 1 7.2 9.14a9 9 0 0 1 17.6 0A6.5 6.5 0 0 1 23.5 22Z"
+                    ></path>
+                    <path
+                      fill="currentColor"
+                      d="M17 26.17V14h-2v12.17l-2.59-2.58L11 25l5 5l5-5l-1.41-1.41L17 26.17z"
+                    ></path>
+                  </svg>
+                </div>
+                <div className="text-lg">Download Keys</div>
+                <div className="ml-3 text-3xl"></div>
+              </button>
+            </a>
+
+            <button
+              type="button"
+              className={`w-full flex justify-center items-center px-4 py-4 mt-10 rounded-md border-2 bg-gray-200 text-gray-400 ${
+                downloadable ? `hidden` : `visible`
+              }`}
+              disabled
+            >
+              <div className="text-xl mr-2">
+                <svg width="1em" height="1em" viewBox="0 0 32 32">
+                  <path
+                    fill="currentColor"
+                    d="M23.5 22H23v-2h.5a4.5 4.5 0 0 0 .36-9H23l-.1-.82a7 7 0 0 0-13.88 0L9 11h-.86a4.5 4.5 0 0 0 .36 9H9v2h-.5A6.5 6.5 0 0 1 7.2 9.14a9 9 0 0 1 17.6 0A6.5 6.5 0 0 1 23.5 22Z"
+                  ></path>
+                  <path
+                    fill="currentColor"
+                    d="M17 26.17V14h-2v12.17l-2.59-2.58L11 25l5 5l5-5l-1.41-1.41L17 26.17z"
+                  ></path>
+                </svg>
+              </div>
+              <div className="text-lg">Download Keys</div>
+              <div className="ml-3 text-3xl"></div>
+            </button>
+          </div>
         </div>
+
         <div className="text-center mt-10">
           <span className="text-red-500">DO NOT FORGET</span> to save your
           <span className="text-emerald-400"> PRIVATE KEY</span> and{" "}
