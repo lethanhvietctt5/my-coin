@@ -9,5 +9,9 @@ body {
 }
 
 ::selection {
-  @apply bg-emerald-300
+  @apply bg-emerald-300;
+}
+
+button {
+  @apply focus:outline-none;
 }
