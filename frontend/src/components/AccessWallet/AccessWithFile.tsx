@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Dialog } from "@headlessui/react";
+import WalletContext from "context/WalletContext";
 
 function AccessWithFile() {
+  const [readFileSuccess, setReadFileSuccess] = useState<boolean | null>(null);
+  const walletCtx = useContext(WalletContext);
+
   function readKeysFromFile(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     const reader = new FileReader();
+
     reader.onload = (e) => {
-      const text = e?.target?.result;
-      console.log(text);
-      alert(text);
+      if (e && e.target) {
+        const text = e.target.result;
+
+        if (typeof text === "string") {
+          const keys = JSON.parse(text);
+          console.log(keys);
+        }
+      } else {
+        setReadFileSuccess(false);
+      }
     };
+
     if (event.target.files) {
       reader.readAsText(event.target.files[0]);
     }
@@ -41,6 +55,20 @@ function AccessWithFile() {
           Access Wallet
         </div>
       </div>
+
+      <Dialog open={!readFileSuccess} onClose={() => setReadFileSuccess(null)}>
+        <Dialog.Panel>
+          <Dialog.Title>Deactivate account</Dialog.Title>
+          <Dialog.Description>
+            This will permanently deactivate your account
+          </Dialog.Description>
+
+          <p>
+            Are you sure you want to deactivate your account? All of your data
+            will be permanently removed. This action cannot be undone.
+          </p>
+        </Dialog.Panel>
+      </Dialog>
     </div>
   );
 }
