@@ -48,14 +48,12 @@ function CreateWallet() {
             <span className="text-emerald-400">Access My Wallet</span>
           </div>
 
-          {/* Public Key */}
           <KeyBtn
             copyKey={copyKey}
             refValue={publicKeyRef}
             content={"Your Public Key"}
           />
 
-          {/* Private Key */}
           <KeyBtn
             copyKey={copyKey}
             refValue={privateKeyRef}
@@ -63,10 +61,7 @@ function CreateWallet() {
           />
 
           <div className="w-full flex space-x-3 justify-between">
-            {/* Button Generate Wallet */}
             <BtnGenerateWallet generateWallet={generateWallet} />
-
-            {/* Button Download Keys */}
             <BtnDownloadKeys downloadable={downloadable} refVal={downloadRef} />
           </div>
 

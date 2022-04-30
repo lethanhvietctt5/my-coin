@@ -3,6 +3,7 @@ import MainLayout from "components/Layout/MainLayout";
 import { useState } from "react";
 import AccessWithKeys from "components/AccessWallet/AccessWithKeys";
 import AccessWithFile from "components/AccessWallet/AccessWithFile";
+import { ToastProvider } from "react-toast-notifications";
 
 function AccessWallet() {
   const [accessViaFile, setAccessViaFile] = useState(false);
@@ -31,7 +32,13 @@ function AccessWallet() {
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel>
-                <AccessWithKeys />
+                <ToastProvider
+                  autoDismiss
+                  autoDismissTimeout={6000}
+                  placement="top-center"
+                >
+                  <AccessWithKeys />
+                </ToastProvider>
               </Tab.Panel>
               <Tab.Panel>
                 <AccessWithFile />
