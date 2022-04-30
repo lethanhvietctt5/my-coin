@@ -1,9 +1,9 @@
 import { ec } from "elliptic";
 import { genesisPrivateKey } from "./initKeys";
-import BlockChain from "./models/blockchain";
-import Transaction from "./models/transaction";
+import BlockChain from "./models/blockchain.model";
+import Transaction from "./models/transaction.model";
 import connectDB from "./utils/db";
-import BlockModel from "./schemas/block";
+import BlockModel from "./schemas/block.schema";
 import Express, { Request, Response } from "express";
 
 const blockchain = new BlockChain();

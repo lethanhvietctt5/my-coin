@@ -1,4 +1,4 @@
-import ITransaction from "./transaction";
+import ITransaction from "./transaction.type";
 
 export default interface IBlock {
   hash: string;

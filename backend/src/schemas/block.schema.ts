@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
-import IBlock from "../types/block";
-import ITransaction from "../types/transaction";
+import IBlock from "../types/block.type";
+import ITransaction from "../types/transaction.type";
 
 const TransactionSchema = new Schema<ITransaction>({
   from: {

@@ -1,6 +1,6 @@
 import crypto from "crypto";
-import IBlock from "../types/block";
-import Transaction from "./transaction";
+import IBlock from "../types/block.type";
+import Transaction from "./transaction.model";
 
 export default class Block implements IBlock {
   public hash: string;

@@ -1,5 +1,5 @@
-import Block from "./block";
-import Transaction from "./transaction";
+import Block from "./block.model";
+import Transaction from "./transaction.model";
 import { genesisPublicKey } from "../initKeys";
 
 export default class BlockChain {

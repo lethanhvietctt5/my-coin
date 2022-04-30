@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { ec } from "elliptic";
-import ITransaction from "../types/transaction";
+import ITransaction from "../types/transaction.type";
 
 const EC = new ec("secp256k1");
 
