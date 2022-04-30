@@ -1,6 +1,9 @@
 import Block from "./block.model";
 import Transaction from "./transaction.model";
 import { genesisPublicKey } from "../initKeys";
+import mongoose from "mongoose";
+import BlockModel from "../schemas/block.schema";
+import IBlock from "../types/block.type";
 
 export default class BlockChain {
   public chain: Block[];
@@ -12,10 +15,10 @@ export default class BlockChain {
     this.difficulty = 2;
     this.pendingTransactions = [];
     this.reward = 10;
-    this.chain = [this.createGenesisBlock()];
+    this.chain = [];
   }
 
-  createGenesisBlock() {
+  async createGenesisBlock() {
     const initTransaction = new Transaction("", genesisPublicKey, 1_000_000);
     const genesisBlock = new Block(
       "0",
@@ -24,6 +27,33 @@ export default class BlockChain {
     );
 
     genesisBlock.mine(this.difficulty);
+
+    const dbBlocks = await BlockModel.find({});
+
+    if (dbBlocks.length === 0) {
+      await BlockModel.create(genesisBlock);
+    }
+
+    let blocks: Block[] = [];
+    for (let block of dbBlocks) {
+      let newBlock: Block;
+      if (block.transactions.length === 0) {
+        newBlock = new Block(block.prevHash, [], block.timestamp);
+        newBlock.hash = block.hash;
+      } else {
+        let Txs = [];
+        for (let tx of block.transactions) {
+          let newTx = new Transaction(tx.from, tx.to, tx.amount);
+          newTx.timestamp = tx.timestamp;
+          Txs.push(newTx);
+        }
+        newBlock = new Block(block.prevHash, Txs, block.timestamp);
+        newBlock.hash = block.hash;
+      }
+      blocks.push(newBlock);
+    }
+
+    this.chain = blocks;
 
     return genesisBlock;
   }

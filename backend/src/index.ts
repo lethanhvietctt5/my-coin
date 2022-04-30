@@ -1,22 +1,9 @@
 import { ec } from "elliptic";
-import { genesisPrivateKey } from "./initKeys";
-import BlockChain from "./models/blockchain.model";
-import Transaction from "./models/transaction.model";
-import connectDB from "./utils/db";
-import BlockModel from "./schemas/block.schema";
 import Express, { Request, Response } from "express";
+import connectDB from "./utils/db";
+import accessWalletRoute from "./routes/accessWallet.route";
 
-const blockchain = new BlockChain();
 const EC = new ec("secp256k1");
-
-const key = EC.keyFromPrivate(genesisPrivateKey);
-
-const tx = new Transaction(key.getPublic("hex"), "wallet1", 200);
-tx.signTransaction(key);
-
-blockchain.addTxToChain(tx);
-
-blockchain.minePendingTxs(key.getPublic("hex"));
 
 const app = Express();
 app.use(Express.json());
@@ -31,6 +18,8 @@ app.use((req, res, next) => {
   next();
 });
 
+connectDB();
+
 app.post("/generate", (req: Request, res: Response) => {
   const key = EC.genKeyPair();
 
@@ -40,9 +29,8 @@ app.post("/generate", (req: Request, res: Response) => {
   });
 });
 
+app.use("/access-wallet", accessWalletRoute);
+
 app.listen(5000, () => {
   console.log(`Server is running at http://localhost:5000`);
 });
-
-
-
