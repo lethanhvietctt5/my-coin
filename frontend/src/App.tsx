@@ -5,6 +5,7 @@ import IWallet from "types/wallet";
 import HomePage from "pages/HomePage";
 import CreateWallet from "pages/CreateWallet";
 import AccessWallet from "pages/AccessWallet";
+import Dashboard from "pages/Dashboard";
 
 function App() {
   const [wallet, setWallet] = useState<IWallet>({
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/create-wallet" element={<CreateWallet />} />
           <Route path="/access-wallet" element={<AccessWallet />} />
+          <Route path="/wallet" element={<Dashboard />} />
         </Routes>
       </div>
     </WalletContext.Provider>
