@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import bgCard from "assets/images/bg-card.png";
 import icWallet from "assets/svgs/ic_wallet.svg";
 import icMoney from "assets/svgs/ic_money.svg";
 import icMining from "assets/svgs/ic_mining.svg";
 import icHistory from "assets/svgs/ic_history.svg";
 import icLogout from "assets/svgs/ic_logout.svg";
+import WalletContext from "context/WalletContext";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SideBar = () => {
-  const publicKey =
-    "045d4a7d2fc706b65a5fdcb1f1b8bfe6d06bf6c239290bb53ca5f05ced84511881f08665c865f5dfa51e6eae637a143896252a0bf8825d6b75cb2f402adc419b87";
+  const walletCtx = useContext(WalletContext);
 
   return (
     <div className="w-1/6 h-full bg-[#071e40] text-white">
@@ -40,9 +42,13 @@ const SideBar = () => {
           <div className="absolute h-full top-0 w-full py-5 px-4">
             <div className="flex h-full flex-col justify-between">
               <div className="font-semibold">My Wallet</div>
-              <div className="text-6xl font-bold text-center">$0</div>
+              <div className="text-3xl font-bold text-center">
+                ${walletCtx.wallet.balance}
+              </div>
               <div className="flex justify-center items-center ">
-                <div className="truncate text-sm">{publicKey}</div>
+                <div className="truncate text-sm">
+                  {walletCtx.wallet.publicKey}
+                </div>
                 <div className="ml-2">
                   <svg width="1em" height="1em" viewBox="0 0 20 20">
                     <path
@@ -57,22 +63,22 @@ const SideBar = () => {
         </div>
       </div>
 
-      <div className="space-y-3 px-2">
+      <div className="flex flex-col space-y-5 px-2">
         <SideBarButton
-          path="/wallet-info"
+          path="/wallet"
           label="Wallet infomation"
           icon={icWallet}
         />
 
         <SideBarButton
-          path="/wallet-info"
+          path="/make-transaction"
           label="Make a transaction"
           icon={icMoney}
         />
 
         <SideBarButton
           path="/wallet-info"
-          label="Mining pending transactions"
+          label="Mining transactions"
           icon={icMining}
         />
 
@@ -95,13 +101,21 @@ type SideBarButtonProps = {
 };
 
 const SideBarButton: React.FC<SideBarButtonProps> = ({ path, label, icon }) => {
+  const location = useLocation();
+
   return (
-    <div className="flex items-center rounded-lg py-2 px-4 cursor-pointer">
-      <div className="pr-2">
-        <img src={icon} alt="" />
+    <Link to={path}>
+      <div
+        className={`flex items-center rounded-lg py-2 px-4 cursor-pointer ${
+          location.pathname === path ? "bg-gray-600" : ""
+        }`}
+      >
+        <div className="pr-2">
+          <img src={icon} alt="" />
+        </div>
+        <div className="text-lg">{label}</div>
       </div>
-      <div>{label}</div>
-    </div>
+    </Link>
   );
 };
 

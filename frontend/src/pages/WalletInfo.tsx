@@ -1,20 +1,24 @@
-import React from "react";
+import WalletContext from "context/WalletContext";
+import React, { useContext } from "react";
 import icMoney from "assets/svgs/ic_money.svg";
+import DashboardLayout from "components/Layout/DashboardLayout";
 
-const WalletInfo = () => {
+function WalletInfo() {
+  const walletCtx = useContext(WalletContext);
+
   return (
-    <div className="px-8 my-8">
+    <DashboardLayout>
       <div className="text-3xl font-medium">Wallet Infomation</div>
-      <div className="w-1/2 bg-white rounded-lg mt-10 py-5 px-5">
+      <div className="w-full bg-white rounded-lg mt-10 py-5 px-5">
         <div className="text text-lg font-bold">My Personal Wallet</div>
         <div className="flex mt-4">
           <div className="font-semibold mr-2">Wallet Address : </div>
-          <div>8r2939028ediew90diw09diw3290820dewisjduj283mds9idm283</div>
+          <div>{walletCtx.wallet.publicKey}</div>
         </div>
 
         <div className="flex mt-4">
           <div className="font-semibold mr-2">Your Balance : </div>
-          <div>0$</div>
+          <div>{walletCtx.wallet.balance} $</div>
         </div>
 
         <div className="flex justify-between text-white mt-8">
@@ -38,8 +42,8 @@ const WalletInfo = () => {
           </div>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
-};
+}
 
 export default WalletInfo;

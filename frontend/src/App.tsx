@@ -5,7 +5,8 @@ import IWallet from "types/wallet";
 import HomePage from "pages/HomePage";
 import CreateWallet from "pages/CreateWallet";
 import AccessWallet from "pages/AccessWallet";
-import Dashboard from "pages/Dashboard";
+import WalletInfo from "pages/WalletInfo";
+import MakeTransaction from "pages/MakeTransaction";
 
 function App() {
   const [wallet, setWallet] = useState<IWallet>({
@@ -21,7 +22,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/create-wallet" element={<CreateWallet />} />
           <Route path="/access-wallet" element={<AccessWallet />} />
-          <Route path="/wallet" element={<Dashboard />} />
+          <Route path="/wallet" element={<WalletInfo />} />
+          <Route path="/make-transaction" element={<MakeTransaction />} />
         </Routes>
       </div>
     </WalletContext.Provider>
