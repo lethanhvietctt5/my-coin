@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import WalletContext from "context/WalletContext";
+import api from "api";
+import { Navigate } from "react-router-dom";
 
 function AccessWithFile() {
   const [readFileSuccess, setReadFileSuccess] = useState<boolean | null>(null);
@@ -10,13 +12,34 @@ function AccessWithFile() {
     event.preventDefault();
     const reader = new FileReader();
 
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       if (e && e.target) {
         const text = e.target.result;
 
         if (typeof text === "string") {
           const keys = JSON.parse(text);
-          console.log(keys);
+          const { publicKey, privateKey } = keys;
+
+          if (
+            typeof publicKey === "string" &&
+            publicKey.length > 0 &&
+            typeof privateKey === "string" &&
+            privateKey.length > 0 &&
+            walletCtx.setWallet
+          ) {
+            const response = await api.post("/access-wallet", {
+              publicKey: publicKey,
+              privateKey: privateKey,
+            });
+
+            if (response.status === 200 && walletCtx.setWallet) {
+              walletCtx.setWallet({
+                publicKey: response.data.publicKey,
+                privateKey: response.data.privateKey,
+                balance: response.data.balance,
+              });
+            }
+          }
         }
       } else {
         setReadFileSuccess(false);
@@ -27,6 +50,9 @@ function AccessWithFile() {
       reader.readAsText(event.target.files[0]);
     }
   }
+
+  if (walletCtx.wallet.privateKey.length > 0)
+    return <Navigate to={"/wallet"} />;
 
   return (
     <div className="w-full">

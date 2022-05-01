@@ -1,14 +1,33 @@
-import { useRef } from "react";
+import api from "api";
+import WalletContext from "context/WalletContext";
+import { useContext, useRef } from "react";
+import { Navigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 
 function AccessWithKeys() {
   const pbKeyRef = useRef<HTMLInputElement>(null);
   const pvKeyRef = useRef<HTMLInputElement>(null);
+  const walletCtx = useContext(WalletContext);
 
   const { addToast } = useToasts();
 
-  function accessWallet() {
+  async function accessWallet() {
     if (pbKeyRef.current?.value && pvKeyRef.current?.value) {
+      const pbKey = pbKeyRef.current.value;
+      const pvKey = pvKeyRef.current.value;
+
+      const response = await api.post("/access-wallet", {
+        publicKey: pbKey,
+        privateKey: pvKey,
+      });
+
+      if (response.status === 200 && walletCtx.setWallet) {
+        walletCtx.setWallet({
+          publicKey: response.data.publicKey,
+          privateKey: response.data.privateKey,
+          balance: response.data.balance,
+        });
+      }
     } else {
       addToast("Please fill in all fields", {
         appearance: "error",
@@ -16,6 +35,9 @@ function AccessWithKeys() {
       });
     }
   }
+
+  if (walletCtx.wallet.privateKey.length > 0)
+    return <Navigate to={"/wallet"} />;
 
   return (
     <div className="w-full">
