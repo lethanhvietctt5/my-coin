@@ -2,6 +2,8 @@ import { ec } from "elliptic";
 import Express, { Request, Response } from "express";
 import connectDB from "./utils/db";
 import accessWalletRoute from "./routes/accessWallet.route";
+import generateWalletRoute from "./routes/generateWallet.route";
+import transactionRoute from "./routes/transaction.route";
 
 const EC = new ec("secp256k1");
 
@@ -20,16 +22,9 @@ app.use((req, res, next) => {
 
 connectDB();
 
-app.post("/generate", (req: Request, res: Response) => {
-  const key = EC.genKeyPair();
-
-  return res.status(200).json({
-    privateKey: key.getPrivate("hex"),
-    publicKey: key.getPublic("hex"),
-  });
-});
-
+app.use("/generate", generateWalletRoute);
 app.use("/access-wallet", accessWalletRoute);
+app.use("/make-transaction", transactionRoute);
 
 app.listen(5000, () => {
   console.log(`Server is running at http://localhost:5000`);

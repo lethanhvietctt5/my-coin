@@ -1,9 +1,8 @@
 import Block from "./block.model";
 import Transaction from "./transaction.model";
 import { genesisPublicKey } from "../initKeys";
-import mongoose from "mongoose";
 import BlockModel from "../schemas/block.schema";
-import IBlock from "../types/block.type";
+import TransactionModel from "../schemas/transaction.schema";
 
 export default class BlockChain {
   public chain: Block[];
@@ -58,6 +57,18 @@ export default class BlockChain {
     return genesisBlock;
   }
 
+  async getPendingTransactions() {
+    if (this.pendingTransactions.length === 0) {
+      const pendingTxs = await TransactionModel.find({});
+
+      for (let tx of pendingTxs) {
+        let pTx = new Transaction(tx.from, tx.to, tx.amount);
+        pTx.timestamp = tx.timestamp;
+        this.pendingTransactions.push(pTx);
+      }
+    }
+  }
+
   getBalance(address: string) {
     let balance = 0;
     for (let block of this.chain) {
@@ -77,7 +88,7 @@ export default class BlockChain {
     return this.chain[this.chain.length - 1];
   }
 
-  addTxToChain(tx: Transaction) {
+  async addTxToChain(tx: Transaction) {
     if (tx.amount <= 0) {
       throw new Error("Can not send negative amount of coins");
     }
@@ -102,6 +113,8 @@ export default class BlockChain {
     if (balance < tx.amount + pendingAmount) {
       throw new Error("Not enough coins");
     }
+
+    TransactionModel.create(tx);
 
     this.pendingTransactions.push(tx);
   }

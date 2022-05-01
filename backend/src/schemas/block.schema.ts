@@ -1,25 +1,6 @@
 import { model, Schema } from "mongoose";
 import IBlock from "../types/block.type";
-import ITransaction from "../types/transaction.type";
-
-const TransactionSchema = new Schema<ITransaction>({
-  from: {
-    type: String,
-  },
-  to: {
-    type: String,
-    required: true,
-  },
-  amount: {
-    type: Number,
-    required: true,
-  },
-  timestamp: {
-    type: Number,
-    required: true,
-  },
-  signature: String,
-});
+import { TransactionSchema } from "./transaction.schema";
 
 const BlockSchema = new Schema<IBlock>({
   hash: {
