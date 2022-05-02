@@ -6,7 +6,7 @@ import blockchain from "../blockchain";
 const router = express.Router();
 const EC = new ec("secp256k1");
 
-router.post("/", (req: Request, res: Response) => {
+router.post("/send", (req: Request, res: Response) => {
   const { privateKey, address, amount } = req.body;
 
   if (
@@ -20,12 +20,16 @@ router.post("/", (req: Request, res: Response) => {
 
     transaction.signTransaction(key);
 
-    blockchain.addTxToChain(transaction);
+    blockchain.addTxToPending(transaction);
 
     return res.status(200).json(transaction);
   }
 
   return res.status(400).json({ error: "Error when make transaction" });
+});
+
+router.get("/pending-transactions", (req: Request, res: Response) => {
+  return res.json(blockchain.pendingTransactions);
 });
 
 export default router;

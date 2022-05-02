@@ -9,6 +9,5 @@ export default function connectDB() {
     console.log("db connected");
     await blockchain.createGenesisBlock();
     await blockchain.getPendingTransactions();
-    console.log(blockchain);
   });
 }

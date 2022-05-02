@@ -33,6 +33,24 @@ export default class BlockChain {
       await BlockModel.create(genesisBlock);
     }
 
+    await this.updateChain();
+  }
+
+  async getPendingTransactions() {
+    if (this.pendingTransactions.length === 0) {
+      const pendingTxs = await TransactionModel.find({});
+
+      for (let tx of pendingTxs) {
+        let pTx = new Transaction(tx.from, tx.to, tx.amount);
+        pTx.timestamp = tx.timestamp;
+        this.pendingTransactions.push(pTx);
+      }
+    }
+  }
+
+  async updateChain() {
+    this.chain = [];
+    const dbBlocks = await BlockModel.find({});
     let blocks: Block[] = [];
     for (let block of dbBlocks) {
       let newBlock: Block;
@@ -53,20 +71,6 @@ export default class BlockChain {
     }
 
     this.chain = blocks;
-
-    return genesisBlock;
-  }
-
-  async getPendingTransactions() {
-    if (this.pendingTransactions.length === 0) {
-      const pendingTxs = await TransactionModel.find({});
-
-      for (let tx of pendingTxs) {
-        let pTx = new Transaction(tx.from, tx.to, tx.amount);
-        pTx.timestamp = tx.timestamp;
-        this.pendingTransactions.push(pTx);
-      }
-    }
   }
 
   getBalance(address: string) {
@@ -88,7 +92,7 @@ export default class BlockChain {
     return this.chain[this.chain.length - 1];
   }
 
-  async addTxToChain(tx: Transaction) {
+  async addTxToPending(tx: Transaction) {
     if (tx.amount <= 0) {
       throw new Error("Can not send negative amount of coins");
     }
@@ -114,14 +118,22 @@ export default class BlockChain {
       throw new Error("Not enough coins");
     }
 
-    TransactionModel.create(tx);
+    await TransactionModel.create(tx);
 
     this.pendingTransactions.push(tx);
   }
 
-  minePendingTxs(minnerAddress: string) {
-    const txForReward = new Transaction("", minnerAddress, this.reward);
+  async minePendingTxs(minnerAddress: string) {
+    for (let tx of this.pendingTransactions) {
+      await TransactionModel.deleteOne({
+        from: tx.from,
+        to: tx.to,
+        amount: tx.amount,
+        timestamp: tx.timestamp,
+      });
+    }
 
+    const txForReward = new Transaction("", minnerAddress, this.reward);
     this.pendingTransactions.push(txForReward);
 
     const newBlock = new Block(
@@ -131,8 +143,9 @@ export default class BlockChain {
     );
 
     newBlock.mine(this.difficulty);
-
-    this.chain.push(newBlock);
+    await BlockModel.create(newBlock);
+    await this.updateChain();
     this.pendingTransactions = [];
+    return newBlock;
   }
 }
