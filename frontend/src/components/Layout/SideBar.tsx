@@ -13,26 +13,28 @@ const SideBar = () => {
   const walletCtx = useContext(WalletContext);
 
   return (
-    <div className="w-1/6 h-full bg-[#071e40] text-white">
+    <div className="w-1/5 h-full bg-[#071e40] text-white">
       <div className="w-full px-5">
         <div className="flex justify-center items-center text-7xl py-6">
-          <div className="flex justify-center items-center">
-            <svg width="1em" height="1em" viewBox="0 0 48 48">
-              <g
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="4"
-              >
-                <path d="M11 34.688L24 42l8-4.5l5-2.813M40 30V15L27.5 7.969m-7 0L8 15v15m13-11.25l-3 1.75v7l3 1.75L24 31l3-1.75l3-1.75v-7l-3-1.75L24 17l-3 1.75ZM24 17v-7m6 17l7 4m-19-4l-7 4"></path>
-                <circle cx="24" cy="7" r="3"></circle>
-                <circle cx="8" cy="33" r="3"></circle>
-                <circle cx="40" cy="33" r="3"></circle>
-              </g>
-            </svg>
-            <div className="text-3xl">MCoin</div>
-          </div>
+          <Link to={"/"}>
+            <div className="flex justify-center items-center">
+              <svg width="1em" height="1em" viewBox="0 0 48 48">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="4"
+                >
+                  <path d="M11 34.688L24 42l8-4.5l5-2.813M40 30V15L27.5 7.969m-7 0L8 15v15m13-11.25l-3 1.75v7l3 1.75L24 31l3-1.75l3-1.75v-7l-3-1.75L24 17l-3 1.75ZM24 17v-7m6 17l7 4m-19-4l-7 4"></path>
+                  <circle cx="24" cy="7" r="3"></circle>
+                  <circle cx="8" cy="33" r="3"></circle>
+                  <circle cx="40" cy="33" r="3"></circle>
+                </g>
+              </svg>
+              <div className="text-3xl">MCoin</div>
+            </div>
+          </Link>
         </div>
 
         <div className="relative w-full mb-10">
@@ -77,8 +79,8 @@ const SideBar = () => {
         />
 
         <SideBarButton
-          path="/wallet-info"
-          label="Mining transactions"
+          path="/mining-transactions"
+          label="Mining"
           icon={icMining}
         />
 

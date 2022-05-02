@@ -13,7 +13,7 @@ function WalletInfo() {
         <div className="text text-lg font-bold">My Personal Wallet</div>
         <div className="flex mt-4">
           <div className="font-semibold mr-2">Wallet Address : </div>
-          <div>{walletCtx.wallet.publicKey}</div>
+          <div className="truncate">{walletCtx.wallet.publicKey}</div>
         </div>
 
         <div className="flex mt-4">
