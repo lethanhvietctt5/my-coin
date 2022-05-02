@@ -13,7 +13,7 @@ export default class BlockChain {
   constructor() {
     this.difficulty = 2;
     this.pendingTransactions = [];
-    this.reward = 10;
+    this.reward = 100;
     this.chain = [];
   }
 
@@ -56,7 +56,6 @@ export default class BlockChain {
       let newBlock: Block;
       if (block.transactions.length === 0) {
         newBlock = new Block(block.prevHash, [], block.timestamp);
-        newBlock.hash = block.hash;
       } else {
         let Txs = [];
         for (let tx of block.transactions) {
@@ -65,8 +64,9 @@ export default class BlockChain {
           Txs.push(newTx);
         }
         newBlock = new Block(block.prevHash, Txs, block.timestamp);
-        newBlock.hash = block.hash;
       }
+      newBlock.hash = block.hash;
+      newBlock.nonce = block.nonce;
       blocks.push(newBlock);
     }
 

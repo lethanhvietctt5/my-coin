@@ -2,12 +2,16 @@ import { ec } from "elliptic";
 import express from "express";
 import * as http from "http";
 import * as Socket from "socket.io";
-import connectDB from "./utils/db";
+
+// Router
 import accessWalletRoute from "./routes/accessWallet.route";
 import generateWalletRoute from "./routes/generateWallet.route";
 import transactionRoute from "./routes/transaction.route";
+import blockRoute from "./routes/block.route";
+
+// DB and blockchain
+import connectDB from "./utils/db";
 import blockchain from "./blockchain";
-import Transaction from "./models/transaction.model";
 
 const EC = new ec("secp256k1");
 
@@ -33,11 +37,12 @@ app.use((req, res, next) => {
 
 connectDB();
 io.on("connection", (socket) => {
-  console.log("New client connected");
   socket.on("mining", async (minerAddress: string) => {
-    const newBlock = await blockchain.minePendingTxs(minerAddress);
-    for (let tx of newBlock.transactions) {
-      io.emit("receive", tx);
+    if (blockchain.pendingTransactions.length > 0) {
+      const newBlock = await blockchain.minePendingTxs(minerAddress);
+      for (let tx of newBlock.transactions) {
+        io.emit("receive", tx);
+      }
     }
   });
 });
@@ -45,6 +50,7 @@ io.on("connection", (socket) => {
 app.use("/generate", generateWalletRoute);
 app.use("/access-wallet", accessWalletRoute);
 app.use("/transactions", transactionRoute);
+app.use("/blocks", blockRoute);
 
 server.listen(5000, () => {
   console.log(`Server is running at http://localhost:5000`);

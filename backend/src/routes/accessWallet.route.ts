@@ -7,7 +7,6 @@ const EC = new ec("secp256k1");
 
 router.post("/", (req: Request, res: Response) => {
   const { privateKey } = req.body;
-  console.log(privateKey);
 
   try {
     const key = EC.keyFromPrivate(privateKey);
