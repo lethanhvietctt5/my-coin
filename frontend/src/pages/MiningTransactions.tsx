@@ -1,12 +1,12 @@
 import api from "api";
 import DashboardLayout from "components/Layout/DashboardLayout";
 import React, { useContext, useEffect, useState } from "react";
-import ITransaction from "types/transaction";
+import { IPendingTransaction } from "types/transaction";
 import socket from "socket";
 import WalletContext from "context/WalletContext";
 
 const MiningTransactions = () => {
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [transactions, setTransactions] = useState<IPendingTransaction[]>([]);
   const walletCtx = useContext(WalletContext);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const MiningTransactions = () => {
     };
 
     fetchBlocks();
-  }, []);
+  }, [walletCtx.wallet]);
 
   function mining() {
     socket.emit("mining", walletCtx.wallet.publicKey);
@@ -49,6 +49,9 @@ const MiningTransactions = () => {
             <th className="border-b p-4 pr-8 py-3 font-bold bg-white text-center">
               Timestamp
             </th>
+            <th className="border-b p-4 pr-8 py-3 font-bold bg-white text-center">
+              Reward
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white ">
@@ -69,6 +72,9 @@ const MiningTransactions = () => {
                 </td>
                 <td className="border-b border-slate-100 p-4 pr-8 text-slate-500 text-center">
                   {tx.timestamp}
+                </td>
+                <td className="border-b border-slate-100 p-4 pr-8 text-slate-500 text-center">
+                  {tx.reward} MC
                 </td>
               </tr>
             );

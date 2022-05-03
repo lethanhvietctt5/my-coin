@@ -13,7 +13,7 @@ const SideBar = () => {
   const walletCtx = useContext(WalletContext);
 
   return (
-    <div className="w-1/5 h-full bg-[#071e40] text-white">
+    <div className="w-1/6 h-full bg-[#071e40] text-white">
       <div className="w-full px-5">
         <div className="flex justify-center items-center text-7xl py-6">
           <Link to={"/"}>
@@ -45,7 +45,7 @@ const SideBar = () => {
             <div className="flex h-full flex-col justify-between">
               <div className="font-semibold">My Wallet</div>
               <div className="text-3xl font-bold text-center">
-                ${walletCtx.wallet.balance}
+                {walletCtx.wallet.balance} MC
               </div>
               <div className="flex justify-center items-center ">
                 <div className="truncate text-sm">

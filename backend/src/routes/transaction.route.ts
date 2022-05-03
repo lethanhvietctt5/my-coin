@@ -12,7 +12,7 @@ router.post("/send", (req: Request, res: Response) => {
   if (
     typeof privateKey === "string" &&
     typeof address === "string" &&
-    typeof amount === "number"
+    parseInt(amount) > 0
   ) {
     const key = EC.keyFromPrivate(privateKey);
     const publicKey = key.getPublic("hex");
@@ -29,7 +29,11 @@ router.post("/send", (req: Request, res: Response) => {
 });
 
 router.get("/pending-transactions", (req: Request, res: Response) => {
-  return res.json(blockchain.pendingTransactions);
+  let resPendingTxs = blockchain.pendingTransactions.map((tx) => ({
+    ...tx,
+    reward: blockchain.reward,
+  }));
+  return res.json(resPendingTxs);
 });
 
 export default router;

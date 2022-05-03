@@ -40,9 +40,7 @@ io.on("connection", (socket) => {
   socket.on("mining", async (minerAddress: string) => {
     if (blockchain.pendingTransactions.length > 0) {
       const newBlock = await blockchain.minePendingTxs(minerAddress);
-      for (let tx of newBlock.transactions) {
-        io.emit("receive", tx);
-      }
+      io.emit("receive", newBlock);
     }
   });
 });

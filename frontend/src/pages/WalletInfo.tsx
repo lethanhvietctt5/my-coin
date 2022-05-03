@@ -18,7 +18,7 @@ function WalletInfo() {
 
         <div className="flex mt-4">
           <div className="font-semibold mr-2">Your Balance : </div>
-          <div>{walletCtx.wallet.balance} $</div>
+          <div>{walletCtx.wallet.balance} MC</div>
         </div>
 
         <div className="flex justify-between text-white mt-8">

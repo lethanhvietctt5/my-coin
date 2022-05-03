@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import WalletContext from "context/WalletContext";
 import IWallet from "types/wallet";
@@ -9,7 +9,8 @@ import WalletInfo from "pages/WalletInfo";
 import MakeTransaction from "pages/MakeTransaction";
 import socket from "socket";
 import MiningTransactions from "pages/MiningTransactions";
-import ITransaction from "types/transaction";
+import "react-toastify/dist/ReactToastify.css";
+import IBlock from "types/block";
 
 function App() {
   const [wallet, setWallet] = useState<IWallet>({
@@ -18,21 +19,22 @@ function App() {
     balance: 0,
   });
 
-  socket.on("receive", (tx: ITransaction) => {
-    console.log(tx);
-    if (wallet.publicKey === tx.from) {
-      setWallet({
-        ...wallet,
-        balance: wallet.balance - tx.amount,
-      });
+  socket.on("receive", (block: IBlock) => {
+    let change = 0;
+    for (let tx of block.transactions) {
+      if (tx.to === wallet.publicKey) {
+        change += tx.amount;
+      }
+
+      if (tx.from === wallet.publicKey) {
+        change -= tx.amount;
+      }
     }
 
-    if (wallet.publicKey === tx.to) {
-      setWallet({
-        ...wallet,
-        balance: wallet.balance + tx.amount,
-      });
-    }
+    setWallet({
+      ...wallet,
+      balance: wallet.balance + change,
+    });
   });
 
   return (

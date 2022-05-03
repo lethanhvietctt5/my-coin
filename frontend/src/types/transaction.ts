@@ -5,4 +5,8 @@ interface ITransaction {
   timestamp: number;
 }
 
+export interface IPendingTransaction extends ITransaction {
+  reward: number;
+}
+
 export default ITransaction;

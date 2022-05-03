@@ -2,14 +2,12 @@ import api from "api";
 import WalletContext from "context/WalletContext";
 import { useContext, useRef } from "react";
 import { Navigate } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { ToastContainer, toast } from "react-toastify";
 
 function AccessWithKeys() {
   const pbKeyRef = useRef<HTMLInputElement>(null);
   const pvKeyRef = useRef<HTMLInputElement>(null);
   const walletCtx = useContext(WalletContext);
-
-  const { addToast } = useToasts();
 
   async function accessWallet() {
     if (pbKeyRef.current?.value && pvKeyRef.current?.value) {
@@ -29,9 +27,14 @@ function AccessWithKeys() {
         });
       }
     } else {
-      addToast("Please fill in all fields", {
-        appearance: "error",
-        autoDismiss: true,
+      toast.error("Please fill in all fields", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
   }
@@ -86,6 +89,7 @@ function AccessWithKeys() {
           Access Wallet
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

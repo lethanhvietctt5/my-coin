@@ -7,8 +7,8 @@ import TransactionModel from "../schemas/transaction.schema";
 export default class BlockChain {
   public chain: Block[];
   public pendingTransactions: Transaction[];
+  public reward: number;
   private difficulty: number;
-  private reward: number;
 
   constructor() {
     this.difficulty = 2;
@@ -113,6 +113,8 @@ export default class BlockChain {
       .filter((trans) => trans.from === tx.from)
       .map((trans) => trans.amount)
       .reduce((prev: number, current: number) => prev + current, 0);
+
+    const total: number = tx.amount + pendingAmount;
 
     if (balance < tx.amount + pendingAmount) {
       throw new Error("Not enough coins");
