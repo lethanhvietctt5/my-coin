@@ -5,6 +5,7 @@ import MainLayout from "components/Layout/MainLayout";
 import KeyBtn from "components/CreateWallet/KeyBtn";
 import BtnGenerateWallet from "components/CreateWallet/BtnGenerateWallet";
 import BtnDownloadKeys from "components/CreateWallet/BtnDownloadKeys";
+import { ToastContainer, toast } from "react-toastify";
 
 function CreateWallet() {
   const privateKeyRef = useRef<HTMLDivElement>(null);
@@ -34,6 +35,15 @@ function CreateWallet() {
 
   function copyKey(key: string) {
     navigator.clipboard.writeText(key);
+    toast.success("Copied to clipboard", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }
 
   return (
@@ -72,6 +82,7 @@ function CreateWallet() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </MainLayout>
   );
 }

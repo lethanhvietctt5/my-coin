@@ -6,16 +6,47 @@ import icMining from "assets/svgs/ic_mining.svg";
 import icHistory from "assets/svgs/ic_history.svg";
 import icLogout from "assets/svgs/ic_logout.svg";
 import WalletContext from "context/WalletContext";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const SideBar = () => {
   const walletCtx = useContext(WalletContext);
+  const navigate = useNavigate();
+
+  function copyAddress(add: string) {
+    navigator.clipboard.writeText(add);
+    toast.success("Copied your address to clipboard", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+  function Logout() {
+    if (walletCtx.setWallet) {
+      walletCtx.setWallet({
+        publicKey: "",
+        privateKey: "",
+        balance: 0,
+      });
+    }
+
+    navigate("/");
+  }
+
+  if (walletCtx.wallet.publicKey.length === 0) {
+    return <Navigate to="/access-wallet" />;
+  }
 
   return (
     <div className="w-1/6 h-full bg-[#071e40] text-white">
       <div className="w-full px-5">
-        <div className="flex justify-center items-center text-7xl py-6">
+        <div className="flex justify-center items-center text-5xl py-6">
           <Link to={"/"}>
             <div className="flex justify-center items-center">
               <svg width="1em" height="1em" viewBox="0 0 48 48">
@@ -45,9 +76,12 @@ const SideBar = () => {
             <div className="flex h-full flex-col justify-between">
               <div className="font-semibold">My Wallet</div>
               <div className="text-3xl font-bold text-center">
-                {walletCtx.wallet.balance} MC
+                {walletCtx.wallet.balance.toLocaleString()} MC
               </div>
-              <div className="flex justify-center items-center ">
+              <div
+                className="flex justify-center items-center cursor-pointer"
+                onClick={() => copyAddress(walletCtx.wallet.publicKey)}
+              >
                 <div className="truncate text-sm">
                   {walletCtx.wallet.publicKey}
                 </div>
@@ -80,7 +114,7 @@ const SideBar = () => {
 
         <SideBarButton
           path="/mining-transactions"
-          label="Mining"
+          label="Mining blocks"
           icon={icMining}
         />
 
@@ -90,8 +124,17 @@ const SideBar = () => {
           icon={icHistory}
         />
 
-        <SideBarButton path="/wallet-info" label="Logout" icon={icLogout} />
+        <div
+          className="flex items-center rounded-lg py-2 px-4 cursor-pointer"
+          onClick={Logout}
+        >
+          <div className="pr-2 w-8">
+            <img src={icLogout} alt="" />
+          </div>
+          <div className="text-sm">Logout</div>
+        </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
@@ -112,10 +155,10 @@ const SideBarButton: React.FC<SideBarButtonProps> = ({ path, label, icon }) => {
           location.pathname === path ? "bg-gray-600" : ""
         }`}
       >
-        <div className="pr-2">
+        <div className="pr-2 w-8">
           <img src={icon} alt="" />
         </div>
-        <div className="text-lg">{label}</div>
+        <div className="text-sm">{label}</div>
       </div>
     </Link>
   );

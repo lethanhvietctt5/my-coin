@@ -29,8 +29,8 @@ function AccessWithKeys() {
     } else {
       toast.error("Please fill in all fields", {
         position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
+        autoClose: 1000,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,

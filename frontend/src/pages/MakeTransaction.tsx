@@ -45,8 +45,8 @@ const MakeTransaction = () => {
       if (response.status === 200) {
         toast.success("Transaction is pending now", {
           position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
+          autoClose: 1000,
+          hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
@@ -63,7 +63,7 @@ const MakeTransaction = () => {
       <div className="text-3xl font-medium">Make a transaction</div>
       <div className="w-1/2 bg-white rounded-lg mt-10 py-5 px-5">
         <div className="text text-lg font-bold">Information of Transaction</div>
-        <div className="flex mt-6">
+        <div className="flex mt-6 text-sm">
           <div className="flex flex-col justify-evenly space-y-2 mr-3">
             <div>Receiver address : </div>
             <div>Amount : </div>
@@ -89,7 +89,7 @@ const MakeTransaction = () => {
           </div>
         </div>
 
-        <div className="flex pl-36 mt-10">
+        <div className="flex pl-36 mt-6 text-sm">
           <div
             className="rounded-lg px-5 py-3 text-white bg-[#071e40] cursor-pointer"
             onClick={sendCoin}
@@ -106,8 +106,8 @@ const MakeTransaction = () => {
 function toastError(mss: string) {
   toast.error(mss, {
     position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
+    autoClose: 1000,
+    hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,

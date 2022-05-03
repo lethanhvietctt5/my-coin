@@ -10,7 +10,7 @@ const LastestTransactions: React.FC<Props> = ({ transactions }) => {
   const [showTxs, setShowTxs] = useState<ITransaction[]>([]);
 
   useEffect(() => {
-    setShowTxs(transactions.slice(index * 8, index + 8));
+    setShowTxs(transactions.slice(index * 8, (index + 1) * 8));
   }, [index, transactions]);
 
   function changeIndex(idx: number) {
@@ -19,9 +19,9 @@ const LastestTransactions: React.FC<Props> = ({ transactions }) => {
 
   return (
     <div className="w-1/2 h-max bg-white rounded-lg px-4 pt-4 divide-y divide-slate-200">
-      <div className=" pb-3">Lastest Blocks</div>
+      <div className=" pb-3">Lastest Transactions</div>
       {showTxs.map((tx, index) => (
-        <div className="flex justify-between items-center py-2">
+        <div key={index} className="flex justify-between items-center py-2">
           <div className="flex space-x-2">
             <div className="p-3 bg-slate-400 rounded-md">Tx</div>
             <div className="max-w-[100px] text-sm">
@@ -63,10 +63,10 @@ const LastestTransactions: React.FC<Props> = ({ transactions }) => {
 
         <div
           className={`px-4 py-2 rounded-md bg-[#071e40] cursor-pointer ${
-            index >= Math.floor(transactions.length / 8) ? "opacity-30" : ""
+            transactions.length - (index + 1) * 8 <= 0 ? "opacity-30" : ""
           }`}
           onClick={() => {
-            if (index < Math.floor(transactions.length / 8)) {
+            if (transactions.length - (index + 1) * 8 > 0) {
               changeIndex(index + 1);
             }
           }}

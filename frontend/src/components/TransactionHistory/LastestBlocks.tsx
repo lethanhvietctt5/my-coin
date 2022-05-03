@@ -21,7 +21,7 @@ const LastestBlocks: React.FC<Props> = ({ blocks }) => {
     <div className="w-1/2 h-max bg-white rounded-lg px-4 pt-4 divide-y divide-slate-200">
       <div className=" pb-3">Lastest Blocks</div>
       {showBk.map((block, index) => (
-        <div className="flex justify-between items-center py-2">
+        <div key={index} className="flex justify-between items-center py-2">
           <div className="flex space-x-2">
             <div className="p-3 bg-slate-400 rounded-md">BK</div>
             <div className="text-sm">
@@ -62,10 +62,10 @@ const LastestBlocks: React.FC<Props> = ({ blocks }) => {
 
         <div
           className={`px-4 py-2 rounded-md bg-[#071e40] cursor-pointer ${
-            index >= Math.floor(blocks.length / 8) ? "opacity-30" : ""
+            blocks.length - (index + 1) * 8 <= 0 ? "opacity-30" : ""
           }`}
           onClick={() => {
-            if (index < Math.floor(blocks.length / 8)) {
+            if (blocks.length - (index + 1) * 8 > 0) {
               changeIndex(index + 1);
             }
           }}

@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { IPendingTransaction } from "types/transaction";
 import socket from "socket";
 import WalletContext from "context/WalletContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const MiningTransactions = () => {
   const [transactions, setTransactions] = useState<IPendingTransaction[]>([]);
@@ -21,6 +22,19 @@ const MiningTransactions = () => {
   }, [walletCtx.wallet]);
 
   function mining() {
+    if (transactions.length === 0) {
+      toast.error("There is no transactions to mine", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      return;
+    }
     socket.emit("mining", walletCtx.wallet.publicKey);
   }
 
@@ -86,6 +100,7 @@ const MiningTransactions = () => {
           The is no any pending transaction
         </div>
       ) : null}
+      <ToastContainer />
     </DashboardLayout>
   );
 };
