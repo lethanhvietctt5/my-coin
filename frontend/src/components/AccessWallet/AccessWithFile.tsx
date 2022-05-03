@@ -84,14 +84,11 @@ function AccessWithFile() {
 
       <Dialog open={!readFileSuccess} onClose={() => setReadFileSuccess(null)}>
         <Dialog.Panel>
-          <Dialog.Title>Deactivate account</Dialog.Title>
-          <Dialog.Description>
-            This will permanently deactivate your account
-          </Dialog.Description>
+          <Dialog.Title>Read file failed! </Dialog.Title>
 
           <p>
-            Are you sure you want to deactivate your account? All of your data
-            will be permanently removed. This action cannot be undone.
+            Read keys from file failed! Please check your keys file and try
+            again
           </p>
         </Dialog.Panel>
       </Dialog>

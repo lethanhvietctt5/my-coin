@@ -3,9 +3,13 @@ import ITransaction from "types/transaction";
 
 type Props = {
   transactions: ITransaction[];
+  selectTransaction: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
-const LastestTransactions: React.FC<Props> = ({ transactions }) => {
+const LastestTransactions: React.FC<Props> = ({
+  transactions,
+  selectTransaction,
+}) => {
   const [index, setIndex] = useState(0);
   const [showTxs, setShowTxs] = useState<ITransaction[]>([]);
 
@@ -18,14 +22,17 @@ const LastestTransactions: React.FC<Props> = ({ transactions }) => {
   }
 
   return (
-    <div className="w-1/2 h-max bg-white rounded-lg px-4 pt-4 divide-y divide-slate-200">
-      <div className=" pb-3">Lastest Transactions</div>
-      {showTxs.map((tx, index) => (
-        <div key={index} className="flex justify-between items-center py-2">
+    <div className="w-1/2 px-4 pt-4 bg-white divide-y rounded-lg h-max divide-slate-200">
+      <div className="pb-3 ">Lastest Transactions</div>
+      {showTxs.map((tx, idx) => (
+        <div key={idx} className="flex items-center justify-between py-2">
           <div className="flex space-x-2">
-            <div className="p-3 bg-slate-400 rounded-md">Tx</div>
+            <div className="p-3 rounded-md bg-slate-400">Tx</div>
             <div className="max-w-[100px] text-sm">
-              <div className="hover:text-blue-700 hover:underline cursor-pointer underline-offset-1 truncate">
+              <div
+                className="truncate cursor-pointer hover:text-blue-700 hover:underline underline-offset-1"
+                onClick={() => selectTransaction(index * 8 + idx)}
+              >
                 {tx.hash}
               </div>
               <div>{tx.timestamp}</div>
@@ -42,12 +49,15 @@ const LastestTransactions: React.FC<Props> = ({ transactions }) => {
             </div>
           </div>
 
-          <div className="w-[100px] text-sm" title="Mining Reward">
+          <div
+            className="w-[100px] text-sm text-blue-500"
+            title="Mining Reward"
+          >
             {tx.amount} MC
           </div>
         </div>
       ))}
-      <div className="flex justify-between text-white py-4">
+      <div className="flex justify-between py-4 text-white">
         <div
           className={`px-4 py-2 rounded-md bg-[#071e40] cursor-pointer ${
             index <= 0 ? "opacity-30" : ""

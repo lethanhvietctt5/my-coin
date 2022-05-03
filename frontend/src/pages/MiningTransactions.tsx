@@ -47,23 +47,23 @@ const MiningTransactions = () => {
       >
         <div className="bg-[#071e40] rounded-md px-3 py-3">Start mining</div>
       </div>
-      <table className="w-full text-sm mt-4">
+      <table className="w-full mt-4 text-sm">
         <thead>
           <tr>
-            <th className="border-b font-bold bg-white text-center">Index</th>
-            <th className="border-b p-4 py-3 font-bold bg-white text-left">
+            <th className="font-bold text-center bg-white border-b">Index</th>
+            <th className="p-4 py-3 font-bold text-left bg-white border-b">
               From
             </th>
-            <th className="border-b p-4 pr-8 py-3 font-bold bg-white text-center">
+            <th className="p-4 py-3 pr-8 font-bold text-center bg-white border-b">
               To
             </th>
-            <th className="border-b p-4 pr-8 py-3 font-bold bg-white text-center">
+            <th className="p-4 py-3 pr-8 font-bold text-center bg-white border-b">
               Value
             </th>
-            <th className="border-b p-4 pr-8 py-3 font-bold bg-white text-center">
+            <th className="p-4 py-3 pr-8 font-bold text-center bg-white border-b">
               Timestamp
             </th>
-            <th className="border-b p-4 pr-8 py-3 font-bold bg-white text-center">
+            <th className="p-4 py-3 pr-8 font-bold text-center bg-white border-b">
               Reward
             </th>
           </tr>
@@ -72,22 +72,22 @@ const MiningTransactions = () => {
           {transactions.map((tx, index) => {
             return (
               <tr key={index}>
-                <td className="border-b border-slate-100 text-slate-500 text-center">
+                <td className="text-center border-b border-slate-100 text-slate-500">
                   {index}
                 </td>
-                <td className="max-w-md border-b border-slate-100 p-4 text-slate-500 truncate">
+                <td className="max-w-md p-4 truncate border-b border-slate-100 text-slate-500">
                   {tx.from}
                 </td>
-                <td className="border-b border-slate-100 p-4 pr-8 text-slate-500 text-center">
+                <td className="p-4 pr-8 text-center border-b border-slate-100 text-slate-500">
                   {tx.to}
                 </td>
-                <td className="border-b border-slate-100 p-4 pr-8 text-slate-500 text-center">
+                <td className="p-4 pr-8 text-center text-blue-500 border-b border-slate-100">
                   {tx.amount} MC
                 </td>
-                <td className="border-b border-slate-100 p-4 pr-8 text-slate-500 text-center">
+                <td className="p-4 pr-8 text-center border-b border-slate-100 text-slate-500">
                   {tx.timestamp}
                 </td>
-                <td className="border-b border-slate-100 p-4 pr-8 text-slate-500 text-center">
+                <td className="p-4 pr-8 text-center text-blue-500 border-b border-slate-100">
                   {tx.reward} MC
                 </td>
               </tr>
@@ -96,7 +96,7 @@ const MiningTransactions = () => {
         </tbody>
       </table>
       {transactions.length === 0 ? (
-        <div className="bg-white text-center py-10">
+        <div className="py-10 text-center bg-white">
           The is no any pending transaction
         </div>
       ) : null}
