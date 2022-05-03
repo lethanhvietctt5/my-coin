@@ -6,9 +6,9 @@ function Header() {
   const walletCtx = useContext(WalletContext);
 
   return (
-    <div className="w-full flex justify-between items-center py-5">
+    <div className="w-full md:flex justify-between items-center py-5">
       <Link to="/">
-        <div className="flex items-center text-7xl text-emerald-700">
+        <div className="flex justify-center items-center text-7xl text-emerald-700 mb-10 md:mb-0">
           <svg width="1em" height="1em" viewBox="0 0 48 48">
             <g
               fill="none"
@@ -26,7 +26,7 @@ function Header() {
           <div className="text-3xl">MCoin</div>
         </div>
       </Link>
-      <div className="flex space-x-4 text-sm">
+      <div className="flex justify-evenly space-x-4 text-sm">
         {walletCtx.wallet.publicKey.length === 0 &&
         walletCtx.wallet.privateKey.length === 0 ? (
           <Link to={"/create-wallet"}>

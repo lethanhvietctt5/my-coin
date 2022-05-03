@@ -5,19 +5,19 @@ import IcMakeTransaction from "./IcMakeTransaction";
 function MakeTransactionBtn() {
   return (
     <Link to="/make-transaction" className="w-1/2">
-      <div className="group flex border-2 rounded-md hover:bg-emerald-400 hover:text-white hover:cursor-pointer">
-        <div className="w-1/2 text-7xl flex justify-center items-center text-emerald-400 group-hover:text-white">
+      <div className="flex border-2 rounded-md group hover:bg-emerald-400 hover:text-white hover:cursor-pointer">
+        <div className="hidden lg:flex items-center justify-center w-1/2 text-6xl xl:text-7xl text-emerald-400 group-hover:text-white">
           <IcMakeTransaction />
         </div>
-        <div className="space-y-2 py-5 pr-6">
-          <div className="text-2xl font-bold">Make a transaction</div>
-          <div className="text-justify">
+        <div className="py-5 pr-6 space-y-2 ml-8 lg:ml-0">
+          <div className="text-xl xl:text-2xl font-bold">Make a transaction</div>
+          <div className="text-justify text-sm">
             {" "}
             Generate your own unique Ethereum wallet. Receive a public address
             (0x...) and choose a method for access and recovery.{" "}
           </div>
-          <div className="flex items-center space-x-3 pt-6">
-            <div className="text-lg font-medium">Create a transaction</div>
+          <div className="flex items-center pt-6 space-x-3">
+            <div className="font-medium text-sm md:text-base xl:text-lg">Create a transaction</div>
             <div className="text-xl">
               <svg width="1em" height="1em" viewBox="0 0 256 256">
                 <path

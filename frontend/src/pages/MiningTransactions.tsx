@@ -78,7 +78,7 @@ const MiningTransactions = () => {
                 <td className="max-w-md p-4 truncate border-b border-slate-100 text-slate-500">
                   {tx.from}
                 </td>
-                <td className="p-4 pr-8 text-center border-b border-slate-100 text-slate-500">
+                <td className="max-w-md p-4 pr-8 text-center truncate border-b border-slate-100 text-slate-500">
                   {tx.to}
                 </td>
                 <td className="p-4 pr-8 text-center text-blue-500 border-b border-slate-100">

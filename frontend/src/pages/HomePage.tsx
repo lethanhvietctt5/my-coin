@@ -7,7 +7,7 @@ function HomePage() {
   return (
     <MainLayout>
       <Banner />
-      <div className="w-full flex space-x-4 mt-10">
+      <div className="w-full sm:flex space-x-4 mt-10">
         <MakeTransactionBtn />
         <TransactionHistoryBtn />
       </div>

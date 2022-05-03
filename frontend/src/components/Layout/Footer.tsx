@@ -6,29 +6,30 @@ function Footer() {
     <div className="w-full">
       <div></div>
       <img src={footer} alt="" className="w-full" />
-      <div className="bg-emerald-800 mt-[-70px] text-white flex justify-center">
+      <div className="bg-emerald-800 2xl:mt-[-70px] text-white flex justify-center">
         <div className="w-4/5 max-w-screen-lg">
-          <div className="flex items-center">
-            <div className="w-1/2">
-              <div className="text-3xl font-bold mb-8">About MC</div>
-              <div>
-                MyCoin - please, call us MC - puts the Ethereum
-                blockchain at your fingertips. We are a team of
-                crypto-enthusiasts dedicated to bring you the most secure, most
-                intuitive, and dare we say prettiest way to manage your ETH and
-                ERC20 tokens. We're always here to help, and we're never giving
-                away ETH. Cheers!
+          <div className="md:flex items-center">
+            <div className="md:w-1/2">
+              <div className="mb-8 text-3xl font-bold">About MC</div>
+              <div className="text-justify">
+                MyCoin - please, call us MC - puts the Ethereum blockchain at
+                your fingertips. We are a team of crypto-enthusiasts dedicated
+                to bring you the most secure, most intuitive, and dare we say
+                prettiest way to manage your ETH and ERC20 tokens. We're always
+                here to help, and we're never giving away ETH. Cheers!
               </div>
             </div>
-            <div className="pl-7">
-              <img src={blockchain} alt="description" />
+            <div className="md:pl-7 flex justify-center">
+              <div className="w-1/2 md:w-auto">
+                <img src={blockchain} alt="description" />
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-between items-center py-8 text-gray-300">
+          <div className="flex items-center justify-between py-8 text-gray-300">
             <div className="flex items-center">
-              <div className="border-r-2 border-gray-300 px-2">Feedback</div>
-              <div className="border-r-2 border-gray-300 px-2">Privacy</div>
+              <div className="px-2 border-r-2 border-gray-300">Feedback</div>
+              <div className="px-2 border-r-2 border-gray-300">Privacy</div>
               <div className="px-2">Terms</div>
             </div>
 
