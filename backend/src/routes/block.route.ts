@@ -6,7 +6,7 @@ import blockchain from "../blockchain";
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
-  return res.json(blockchain.chain);
+  return res.status(200).json(blockchain.chain);
 });
 
 router.get("/:index", (req: Request, res: Response) => {

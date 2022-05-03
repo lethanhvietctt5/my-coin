@@ -61,6 +61,7 @@ export default class BlockChain {
         for (let tx of block.transactions) {
           let newTx = new Transaction(tx.from, tx.to, tx.amount);
           newTx.timestamp = tx.timestamp;
+          newTx.signature = tx.signature;
           Txs.push(newTx);
         }
         newBlock = new Block(block.prevHash, Txs, block.timestamp);
