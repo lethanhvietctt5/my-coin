@@ -49,7 +49,7 @@ function CreateWallet() {
   return (
     <MainLayout>
       <div className="flex justify-center items-center py-10">
-        <div className="w-1/2">
+        <div className="w-3/4 lg:w-2/3 xl:w-1/2">
           <div className="text-2xl font-bold text-center">
             Create a New Wallet
           </div>
@@ -70,7 +70,7 @@ function CreateWallet() {
             content={"Your Private Key"}
           />
 
-          <div className="w-full flex space-x-3 justify-between">
+          <div className="w-full sm:flex sm:space-x-3 justify-between">
             <BtnGenerateWallet generateWallet={generateWallet} />
             <BtnDownloadKeys downloadable={downloadable} refVal={downloadRef} />
           </div>

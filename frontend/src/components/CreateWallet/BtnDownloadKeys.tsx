@@ -8,13 +8,13 @@ type Props = {
 
 const BtnDownloadKeys: React.FC<Props> = ({ refVal, downloadable }) => {
   return (
-    <div className="w-1/2">
+    <div className="w-full sm:w-1/2">
       <a
         href="#"
         ref={refVal}
         className={`${!downloadable ? `hidden` : `visible`}`}
       >
-        <button className="w-full flex justify-center items-center px-4 py-4 rounded-md border-2 border-emerald-600 text-white hover:text-emerald-600 bg-emerald-600 hover:bg-white mt-10 cursor-pointer transition-colors ease-in-out delay-150">
+        <button className="w-full flex justify-center items-center px-4 py-4 rounded-md border-2 border-emerald-600 text-white hover:text-emerald-600 bg-emerald-600 hover:bg-white mt-5 sm:mt-10 cursor-pointer transition-colors ease-in-out delay-150">
           <div className="text-xl mr-2">
             <svg width="1em" height="1em" viewBox="0 0 32 32">
               <path
@@ -27,14 +27,14 @@ const BtnDownloadKeys: React.FC<Props> = ({ refVal, downloadable }) => {
               ></path>
             </svg>
           </div>
-          <div className="text-lg">Download Keys</div>
+          <div className="text-sm md:text-base lg:text-lg">Download Keys</div>
           <div className="ml-3 text-3xl"></div>
         </button>
       </a>
 
       <button
         type="button"
-        className={`w-full flex justify-center items-center px-4 py-4 mt-10 rounded-md border-2 bg-gray-200 text-gray-400 ${
+        className={`w-full flex justify-center items-center px-4 py-4 mt-5 sm:mt-10 rounded-md border-2 bg-gray-200 text-gray-400 ${
           downloadable ? `hidden` : `visible`
         }`}
         disabled
@@ -51,7 +51,7 @@ const BtnDownloadKeys: React.FC<Props> = ({ refVal, downloadable }) => {
             ></path>
           </svg>
         </div>
-        <div className="text-lg">Download Keys</div>
+        <div className="text-sm md:text-base lg:text-lg">Download Keys</div>
         <div className="ml-3 text-3xl"></div>
       </button>
     </div>

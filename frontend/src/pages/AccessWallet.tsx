@@ -9,7 +9,7 @@ function AccessWallet() {
   return (
     <MainLayout>
       <div className="flex justify-center items-center mt-10">
-        <div className="w-3/4">
+        <div className="w-full sm:w-5/6 md:w-3/4">
           <Tab.Group selectedIndex={+accessViaFile}>
             <Tab.List className="w-full flex justify-between border rounded-xl">
               <Tab

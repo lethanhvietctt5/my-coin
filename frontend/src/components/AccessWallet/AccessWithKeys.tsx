@@ -83,7 +83,7 @@ function AccessWithKeys() {
 
       <div className="flex justify-center mt-10">
         <div
-          className="w-1/3 py-2 border border-emerald-700 hover:bg-emerald-700 rounded-lg text-emerald-700 hover:text-white text-center text-lg cursor-pointer transition-colors ease-in-out delay-150"
+          className="w-1/3 py-2 border border-emerald-700 hover:bg-emerald-700 rounded-lg text-emerald-700 hover:text-white text-center text-base md:text-lg cursor-pointer transition-colors ease-in-out delay-150"
           onClick={accessWallet}
         >
           Access Wallet
