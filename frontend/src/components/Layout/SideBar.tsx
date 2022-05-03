@@ -44,7 +44,7 @@ const SideBar = () => {
   }
 
   return (
-    <div className="w-1/6 h-full bg-[#071e40] text-white">
+    <div className="w-1/5 xl:w-1/6 h-full bg-[#071e40] text-white">
       <div className="w-full px-5">
         <div className="flex justify-center items-center text-5xl py-6">
           <Link to={"/"}>
@@ -75,7 +75,7 @@ const SideBar = () => {
           <div className="absolute h-full top-0 w-full py-5 px-4">
             <div className="flex h-full flex-col justify-between">
               <div className="font-semibold">My Wallet</div>
-              <div className="text-3xl font-bold text-center">
+              <div className="text-xl 2xl:text-2xl font-bold text-center text-[#071E40]">
                 {walletCtx.wallet.balance.toLocaleString()} MC
               </div>
               <div

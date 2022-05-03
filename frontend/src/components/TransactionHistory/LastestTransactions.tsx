@@ -25,7 +25,10 @@ const LastestTransactions: React.FC<Props> = ({
     <div className="w-1/2 px-4 pt-4 bg-white divide-y rounded-lg h-max divide-slate-200">
       <div className="pb-3 ">Lastest Transactions</div>
       {showTxs.map((tx, idx) => (
-        <div key={idx} className="flex items-center justify-between py-2">
+        <div
+          key={idx}
+          className="flex items-center justify-between py-2 space-x-6"
+        >
           <div className="flex space-x-2">
             <div className="p-3 rounded-md bg-slate-400">Tx</div>
             <div className="max-w-[100px] text-sm">
@@ -38,7 +41,7 @@ const LastestTransactions: React.FC<Props> = ({
               <div>{tx.timestamp}</div>
             </div>
           </div>
-          <div className="w-1/2 text-sm">
+          <div className="w-1/3 2xl:w-1/2 text-sm">
             <div className="truncate">
               <span className="text-blue-700">From : </span>
               {tx.from.length > 0 ? tx.from : "MC"}

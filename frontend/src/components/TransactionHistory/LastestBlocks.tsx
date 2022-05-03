@@ -22,7 +22,7 @@ const LastestBlocks: React.FC<Props> = ({ blocks, selectBlock }) => {
     <div className="w-1/2 px-4 pt-4 bg-white divide-y rounded-lg h-max divide-slate-200">
       <div className="pb-3 ">Lastest Blocks</div>
       {showBk.map((block, index) => (
-        <div key={index} className="flex items-center justify-between py-2">
+        <div key={index} className="flex items-center justify-between py-2 space-x-6">
           <div className="flex space-x-2">
             <div className="p-3 rounded-md bg-slate-400">BK</div>
             <div className="text-sm">
@@ -35,7 +35,7 @@ const LastestBlocks: React.FC<Props> = ({ blocks, selectBlock }) => {
               <div>{block.timestamp}</div>
             </div>
           </div>
-          <div className="w-1/2 text-sm">
+          <div className="w-1/3 2xl:w-1/2 text-sm">
             <div className="truncate">
               <span className="text-blue-700">Miner : </span>
               {block.transactions.length > 0

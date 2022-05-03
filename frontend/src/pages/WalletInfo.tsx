@@ -3,23 +3,57 @@ import React, { useContext } from "react";
 import icMoney from "assets/svgs/ic_money.svg";
 import DashboardLayout from "components/Layout/DashboardLayout";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 function WalletInfo() {
   const walletCtx = useContext(WalletContext);
+
+  function copyAddress(add: string) {
+    navigator.clipboard.writeText(add);
+    toast.success("Copied your address to clipboard", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 
   return (
     <DashboardLayout>
       <div className="text-3xl font-medium">Wallet Infomation</div>
       <div className="w-full bg-white rounded-lg text-sm mt-10 py-5 px-5">
         <div className="text text-lg font-bold">My Personal Wallet</div>
-        <div className="flex mt-4">
-          <div className="font-semibold mr-2">Wallet Address : </div>
+        <div className="flex mt-4 items-center">
+          <div className="font-semibold mr-2 min-w-max">Wallet Address : </div>
           <div className="truncate">{walletCtx.wallet.publicKey}</div>
+          <div
+            className="ml-2 text-xl text-blue-400 cursor-pointer"
+            onClick={() => copyAddress(walletCtx.wallet.publicKey)}
+          >
+            <svg width="1em" height="1em" viewBox="0 0 36 36">
+              <path
+                fill="currentColor"
+                d="M29.5 7h-19A1.5 1.5 0 0 0 9 8.5v24a1.5 1.5 0 0 0 1.5 1.5h19a1.5 1.5 0 0 0 1.5-1.5v-24A1.5 1.5 0 0 0 29.5 7ZM29 32H11V9h18Z"
+                className="clr-i-outline clr-i-outline-path-1"
+              ></path>
+              <path
+                fill="currentColor"
+                d="M26 3.5A1.5 1.5 0 0 0 24.5 2h-19A1.5 1.5 0 0 0 4 3.5v24A1.5 1.5 0 0 0 5.5 29H6V4h20Z"
+                className="clr-i-outline clr-i-outline-path-2"
+              ></path>
+              <path fill="none" d="M0 0h36v36H0z"></path>
+            </svg>
+          </div>
         </div>
 
         <div className="flex items-center mt-4">
           <div className="font-semibold mr-2">Your Balance : </div>
-          <div className="text-red-700 text-lg">{walletCtx.wallet.balance.toLocaleString()} MC</div>
+          <div className="text-red-700 text-lg">
+            {walletCtx.wallet.balance.toLocaleString()} MC
+          </div>
         </div>
 
         <div className="flex justify-between text-white mt-8">
@@ -47,6 +81,7 @@ function WalletInfo() {
           </Link>
         </div>
       </div>
+      <ToastContainer />
     </DashboardLayout>
   );
 }
