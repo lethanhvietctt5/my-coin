@@ -11,6 +11,7 @@ import socket from "socket";
 import MiningTransactions from "pages/MiningTransactions";
 import "react-toastify/dist/ReactToastify.css";
 import IBlock from "types/block";
+import TransactionHistory from "pages/TransactionHistory";
 
 function App() {
   const [wallet, setWallet] = useState<IWallet>({
@@ -47,6 +48,7 @@ function App() {
           <Route path="/wallet" element={<WalletInfo />} />
           <Route path="/make-transaction" element={<MakeTransaction />} />
           <Route path="/mining-transactions" element={<MiningTransactions />} />
+          <Route path="/transaction-history" element={<TransactionHistory />} />
         </Routes>
       </div>
     </WalletContext.Provider>

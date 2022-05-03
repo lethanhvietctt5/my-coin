@@ -3,6 +3,8 @@ interface ITransaction {
   to: string;
   amount: number;
   timestamp: number;
+  signature?: string;
+  hash?: string;
 }
 
 export interface IPendingTransaction extends ITransaction {

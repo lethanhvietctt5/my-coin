@@ -85,7 +85,7 @@ const SideBar = () => {
         />
 
         <SideBarButton
-          path="/wallet-info"
+          path="/transaction-history"
           label="Transaction history"
           icon={icHistory}
         />
