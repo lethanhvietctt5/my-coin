@@ -14,9 +14,8 @@ function TransactionHistoryBtn() {
             Transaction History
           </div>
           <div className="text-justify text-sm">
-            {" "}
-            Generate your own unique Ethereum wallet. Receive a public address
-            (0x...) and choose a method for access and recovery.{" "}
+            Get latest blocks and transaction of MyCoin Ecosystem. You can check
+            detail about any block or transaction.
           </div>
           <div className="flex items-center space-x-3 pt-6">
             <div className="font-medium text-sm md:text-base xl:text-lg">

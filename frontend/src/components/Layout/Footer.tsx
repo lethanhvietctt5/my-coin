@@ -12,11 +12,10 @@ function Footer() {
             <div className="md:w-1/2">
               <div className="mb-8 text-3xl font-bold">About MC</div>
               <div className="text-justify">
-                MyCoin - please, call us MC - puts the Ethereum blockchain at
-                your fingertips. We are a team of crypto-enthusiasts dedicated
-                to bring you the most secure, most intuitive, and dare we say
-                prettiest way to manage your ETH and ERC20 tokens. We're always
-                here to help, and we're never giving away ETH. Cheers!
+                MyCoin - please, call us MC - is a free, client-side interface
+                helping you interact with blockchain. Our easy-to-use,
+                open-source platform allows you to generate wallets and access
+                your personal wallet.
               </div>
             </div>
             <div className="md:pl-7 flex justify-center">

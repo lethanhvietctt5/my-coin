@@ -5,6 +5,7 @@ import { IPendingTransaction } from "types/transaction";
 import socket from "socket";
 import WalletContext from "context/WalletContext";
 import { ToastContainer, toast } from "react-toastify";
+import formatDate from "helpers/formatDate";
 
 const MiningTransactions = () => {
   const [transactions, setTransactions] = useState<IPendingTransaction[]>([]);
@@ -85,7 +86,7 @@ const MiningTransactions = () => {
                   {tx.amount} MC
                 </td>
                 <td className="p-4 pr-8 text-center border-b border-slate-100 text-slate-500">
-                  {tx.timestamp}
+                  {formatDate(tx.timestamp)}
                 </td>
                 <td className="p-4 pr-8 text-center text-blue-500 border-b border-slate-100">
                   {tx.reward} MC

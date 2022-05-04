@@ -10,14 +10,17 @@ function MakeTransactionBtn() {
           <IcMakeTransaction />
         </div>
         <div className="py-5 pr-6 space-y-2 ml-8 lg:ml-0">
-          <div className="text-xl xl:text-2xl font-bold">Make a transaction</div>
+          <div className="text-xl xl:text-2xl font-bold">
+            Make a transaction
+          </div>
           <div className="text-justify text-sm">
-            {" "}
-            Generate your own unique Ethereum wallet. Receive a public address
-            (0x...) and choose a method for access and recovery.{" "}
+            Generate your own unique wallet. Receive a keypair (Public Key and
+            Private Key). And download file stored to access wallet.
           </div>
           <div className="flex items-center pt-6 space-x-3">
-            <div className="font-medium text-sm md:text-base xl:text-lg">Create a transaction</div>
+            <div className="font-medium text-sm md:text-base xl:text-lg">
+              Create a transaction
+            </div>
             <div className="text-xl">
               <svg width="1em" height="1em" viewBox="0 0 256 256">
                 <path

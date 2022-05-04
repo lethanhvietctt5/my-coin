@@ -1,3 +1,4 @@
+import formatDate from "helpers/formatDate";
 import React from "react";
 import IBlock from "types/block";
 
@@ -28,7 +29,7 @@ const BlockDetail: React.FC<Props> = ({ block, index, selectBlock }) => {
       <div className="w-1/2 px-4 pt-4 bg-white divide-y rounded-lg h-max divide-slate-200">
         <div className="pb-3 text-xl">Block #{index}</div>
         <BlockInfoRow title={"Block height"} value={index} />
-        <BlockInfoRow title={"Timestamp"} value={block.timestamp} />
+        <BlockInfoRow title={"Timestamp"} value={formatDate(block.timestamp)} />
         <BlockInfoRow
           title={"Transactions"}
           value={`${block.transactions.length} transactions`}

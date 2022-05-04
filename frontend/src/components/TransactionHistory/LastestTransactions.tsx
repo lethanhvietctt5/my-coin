@@ -1,3 +1,4 @@
+import formatDate from "helpers/formatDate";
 import React, { useEffect, useState } from "react";
 import ITransaction from "types/transaction";
 
@@ -38,7 +39,7 @@ const LastestTransactions: React.FC<Props> = ({
               >
                 {tx.hash}
               </div>
-              <div>{tx.timestamp}</div>
+              <div className="text-xs">{formatDate(tx.timestamp)}</div>
             </div>
           </div>
           <div className="w-1/3 2xl:w-1/2 text-sm">

@@ -1,3 +1,4 @@
+import formatDate from "helpers/formatDate";
 import React, { useEffect, useState } from "react";
 import IBlock from "types/block";
 
@@ -21,18 +22,21 @@ const LastestBlocks: React.FC<Props> = ({ blocks, selectBlock }) => {
   return (
     <div className="w-1/2 px-4 pt-4 bg-white divide-y rounded-lg h-max divide-slate-200">
       <div className="pb-3 ">Lastest Blocks</div>
-      {showBk.map((block, index) => (
-        <div key={index} className="flex items-center justify-between py-2 space-x-6">
+      {showBk.map((block, idx) => (
+        <div
+          key={idx}
+          className="flex items-center justify-between py-2 space-x-6"
+        >
           <div className="flex space-x-2">
             <div className="p-3 rounded-md bg-slate-400">BK</div>
             <div className="text-sm">
               <div
                 className="cursor-pointer hover:text-blue-700 hover:underline underline-offset-1"
-                onClick={() => selectBlock(index)}
+                onClick={() => selectBlock(index * 8 + idx)}
               >
-                Block {index}
+                Block {index * 8 + idx}
               </div>
-              <div>{block.timestamp}</div>
+              <div className="text-xs">{formatDate(block.timestamp)}</div>
             </div>
           </div>
           <div className="w-1/3 2xl:w-1/2 text-sm">

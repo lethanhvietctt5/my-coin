@@ -6,6 +6,7 @@ import KeyBtn from "components/CreateWallet/KeyBtn";
 import BtnGenerateWallet from "components/CreateWallet/BtnGenerateWallet";
 import BtnDownloadKeys from "components/CreateWallet/BtnDownloadKeys";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 function CreateWallet() {
   const privateKeyRef = useRef<HTMLDivElement>(null);
@@ -53,9 +54,12 @@ function CreateWallet() {
           <div className="text-2xl font-bold text-center">
             Create a New Wallet
           </div>
+
           <div className="mt-5 text-center">
             <span>Already have a wallet? </span>
-            <span className="text-emerald-400">Access My Wallet</span>
+            <Link to={"/access-wallet"}>
+              <span className="text-emerald-400">Access My Wallet</span>
+            </Link>
           </div>
 
           <KeyBtn
