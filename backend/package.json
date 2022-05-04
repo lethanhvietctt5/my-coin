@@ -10,7 +10,7 @@
     "socket.io": "^4.5.0"
   },
   "scripts": {
-    "dev": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts"
   },
   "devDependencies": {
     "@types/elliptic": "^6.4.14",
